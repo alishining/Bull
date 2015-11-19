@@ -7,15 +7,8 @@ exports.index = function(req, res){
 exports.login = function(req, res){
 	res.render('login', { title: '用户登陆'});
 };
-exports.doLogin = function(req, res){
-	var user={
-		username:'admin',
-		password:'admin'
-	}
-	if(req.body.username===user.username && req.body.password===user.password){
-		res.redirect('/home');
-	}
-	res.redirect('/login');
+exports.doLogin = function(req, res, next){
+	userDao.doLogin(req, res, next, req.body.username, req.body.password);
 };
 exports.logout = function(req, res){
 	res.redirect('/');
@@ -24,12 +17,8 @@ exports.register = function(req, res){
 	res.render('register');
 };
 exports.submit = function(req, res, next){
-	userDao.add(req, res, next);
+	userDao.addUser(req, res, next);
 }
 exports.home = function(req, res){
-	var user={
-		username:'admin',
-		password:'admin'
-	}
-	res.render('home', { title: 'Home',user: user});
+	res.render('home');
 };

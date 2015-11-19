@@ -25,7 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/register', routes.register);
 app.post('/register', routes.submit);
-
+app.get('/home', routes.home);
+app.get('/login', routes.login);
+app.post('/login', routes.doLogin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

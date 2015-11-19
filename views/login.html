@@ -1,24 +1,80 @@
-<% include header.html %>
-<div class="container-fluid">
-	<form class="form-horizontal" method="post">
-		<fieldset>
-			<legend>用户登陆</legend>
-			<div class="control-group">
-				<label class="control-label" for="username">用户名</label>
-				<div class="controls">
-					<input type="text" class="input-xlarge" id="username" name="username">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="password">密码</label>
-				<div class="controls">
-					<input type="password" class="input-xlarge" id="password" name="password">
-				</div>
-			</div>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">登陆</button>
-			</div>
-		</fieldset>
-	</form>
-</div>
-<% include footer.html %>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>一卡通登录</title>
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css"/>
+    <link rel="stylesheet" href="/stylesheets/bootstrapValidator.css"/>
+
+    <!-- Include the FontAwesome CSS if you want to use feedback icons provided by FontAwesome -->
+    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />-->
+
+    <script type="text/javascript" src="/javascripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrapValidator.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- form: -->
+            <section>
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="page-header">
+                        <h2>一卡通登录</h2>
+                    </div>
+
+                    <form id="defaultForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">用户名（邮箱）</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" id="username" name="username"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">密码</label>
+                            <div class="col-lg-5">
+                                <input type="password" class="form-control" id="password" name="password"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-3">
+                                <button type="submit" class="btn btn-primary" id="loginBtn">登录</button>
+								<button type="button" class="btn btn-info" id="resetBtn">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <!-- :form -->
+        </div>
+    </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#defaultForm').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            username: {
+                validators: {
+                    emailAddress: {
+                        message: '邮箱格式错误'
+                    }
+                }
+            }
+        }
+    });
+
+    $('#resetBtn').click(function() {
+        $('#defaultForm').data('bootstrapValidator').resetForm(true);
+    });
+});
+</script>
+</body>
+</html>
