@@ -1,4 +1,76 @@
-<% include header.html %>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-<% include footer.html %>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>一卡通系统</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<!--[if lte IE 8]><link rel="stylesheet" href="/css/responsive-nav.css"><![endif]-->
+		<!--[if gt IE 8]><!--><link rel="stylesheet" href="/css/styles.css"><!--<![endif]-->
+		<script src="/js/responsive-nav.js"></script>
+	</head>
+	<body>
+		<div role="navigation" id="foo" class="nav-collapse">
+			<ul>
+				<li id="user_info"><a>个人信息</a></li>
+				<li id="account"><a>账户余额</a></li>
+				<li id="record"><a>交易记录</a></li>
+				<li id="info_modify"><a>信息修改</a></li>
+				<li id="pwd_modify"><a>密码修改</a></li>
+				<li id="bind_card"><a>卡片绑定</a></li>
+				<li id="cash"><a>充值提现</a></li>
+				<li id="score"><a>积分管理</a></li>
+			</ul>
+		</div>
+		<div role="main" class="main">
+			<a href="#nav" class="nav-toggle">Menu</a>
+			<div id="main_page">
+			</div>
+		</div>
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var navigation = responsiveNav("foo", {customToggle: ".nav-toggle"});
+				$("#user_info").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("user_info");
+				});
+				$("#account").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("account");
+				});
+				$("#record").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("record");
+				});
+				$("#info_modify").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("info_modify");
+				});
+				$("#pwd_modify").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("pwd_modify");
+				});
+				$("#bind_card").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("bind_card");
+				});
+				$("#cash").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("cash");
+				});
+				$("#score").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("score");
+				});
+			});
+		</script>
+	</body>
+</html>
