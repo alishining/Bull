@@ -53,7 +53,6 @@ exports.login = function(req, res, email, password) {
 			connection.query(sql.GET_USER_INFO, values, function(err, rows){
 				try {
 					if (password === rows[0].PASSWORD) {
-						console.log(rows);
 						success.msg = rows;
 						res.json(success);
 					} else {
@@ -77,8 +76,8 @@ exports.modify_password = function(req, res, email, new_password) {
 			var values = [new_password, email]; 
 			connection.query(sql.MODIFY_PASSWORD, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}
@@ -96,8 +95,8 @@ exports.bind_card = function(req, res, email, card_id) {
 			var values = [card_id, email]; 
 			connection.query(sql.BIND_CARD, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}
@@ -109,14 +108,21 @@ exports.bind_card = function(req, res, email, card_id) {
 	})
 }
 
-exports.get_account = function(req, res, email) {
+exports.get_sql_rows = function(req, res, email, sql, type) {
 	pool.getConnection(function(err, connection) {
 		try{
 			var values = [email]; 
-			connection.query(sql.GET_ACCOUNT, values, function(err, rows){
+			connection.query(sql, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows){
+						switch (type){
+							case "account" : req.session.account = rows;
+											 break;
+							case "user_info" : req.session.user_info = rows;
+											   break;
+						}
+						res.json(success);						
+					}
 				} catch(err) {
 					res.json(failed);
 				}
@@ -131,11 +137,11 @@ exports.get_account = function(req, res, email) {
 exports.set_account = function(req, res, ins_email, des_email, value) {
 	pool.getConnection(function(err, connection) {
 		try{
-			
+
 			connection.query(sql.INS_ACCOUNT, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}
@@ -145,8 +151,8 @@ exports.set_account = function(req, res, ins_email, des_email, value) {
 			var values = [value, email]; 
 			connection.query(sql.INS_ACCOUNT, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}
@@ -155,8 +161,8 @@ exports.set_account = function(req, res, ins_email, des_email, value) {
 
 			connection.query(sql.INS_ACCOUNT, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}
@@ -165,8 +171,8 @@ exports.set_account = function(req, res, ins_email, des_email, value) {
 
 			connection.query(sql.DES_ACCOUNT, values, function(err, rows){
 				try {
-						if (rows) //TODO: Check row content
-							res.json(success);						
+					if (rows) //TODO: Check row content
+				res.json(success);						
 				} catch(err) {
 					res.json(failed);
 				}

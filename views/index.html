@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<!--[if lte IE 8]><link rel="stylesheet" href="/css/responsive-nav.css"><![endif]-->
 		<!--[if gt IE 8]><!--><link rel="stylesheet" href="/css/styles.css"><!--<![endif]-->
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script src="/js/responsive-nav.js"></script>
 	</head>
 	<body>
@@ -18,6 +19,7 @@
 				<li id="pwd_modify"><a>密码修改</a></li>
 				<li id="bind_card"><a>卡片绑定</a></li>
 				<li id="cash"><a>充值提现</a></li>
+				<li id="friend"><a>好友转账</a></li>
 				<li id="score"><a>积分管理</a></li>
 			</ul>
 		</div>
@@ -33,12 +35,63 @@
 				$("#user_info").click(function(){
 					$(this).parent().children().removeClass('active');
 					$(this).addClass('active');
-					$('#main_page').load("user_info");
+					$.ajax({
+						url  : "get_user_info",
+						type : "post", 
+						async: false,
+						success: function(res) {
+							if (res.code == 0) {
+								try {
+									$('#main_page').load("user_info", {
+										"email": res.msg[0].EMAIL,
+										"nick": res.msg[0].NICK,
+										"status": res.msg[0].STATUS1,
+										"type": res.msg[0].TYPE,
+										"name": res.msg[0].NAME,
+										"sex": res.msg[0].SEX,
+										"minority": res.msg[0].MINORITY,
+										"home_town": res.msg[0].HOME_TOWN,
+										"phone": res.msg[0].PHONE,
+										"city": res.msg[0].CITY,
+										"school": res.msg[0].SCHOOL,
+										"academy": res.msg[0].ACADEMY,
+										"class": res.msg[0].CLASS1
+									});
+									} catch(err) {
+									$('#main_page').load("failed");
+								}
+								} else {
+								$('#main_page').load("failed");
+							}
+						},
+						error : function(res) {
+							$('#main_page').load("failed");
+						}
+					});
+
 				});
 				$("#account").click(function(){
 					$(this).parent().children().removeClass('active');
 					$(this).addClass('active');
-					$('#main_page').load("account");
+					$.ajax({
+						url  : "get_account", 
+						type : "post", 
+						async: false,
+						success: function(res) {
+							if (res.code == 0) {
+								try {
+									$('#main_page').load("account", {"account": res.msg[0].ACCOUNT});
+									} catch(err) {
+									$('#main_page').load("failed");
+								}
+								} else {
+								$('#main_page').load("failed");
+							}
+						},
+						error : function(res) {
+							$('#main_page').load("failed");
+						}
+					});
 				});
 				$("#record").click(function(){
 					$(this).parent().children().removeClass('active');
@@ -64,6 +117,11 @@
 					$(this).parent().children().removeClass('active');
 					$(this).addClass('active');
 					$('#main_page').load("cash");
+				});
+				$("#friend").click(function(){
+					$(this).parent().children().removeClass('active');
+					$(this).addClass('active');
+					$('#main_page').load("friend");
 				});
 				$("#score").click(function(){
 					$(this).parent().children().removeClass('active');
